@@ -1,0 +1,118 @@
+{
+  "owner": "SANJEEV S",
+  "confirmed_on": "2026-11-23",
+  "authority": "Fresh user answers for this personal repo. Do not inherit older salary, city or experience caps.",
+  "roles": {
+    "allowed_families": [
+      "frontend",
+      "full_stack",
+      "software_engineering"
+    ],
+    "full_stack_requires_frontend_focus": true,
+    "generic_software_engineering_requires_frontend_focus": true,
+    "target_minimum_years": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "maximum_stated_required_years": 5,
+    "five_year_boundary": "Eligible at exactly 5 or 5+ if the technical scope fits; lower priority than the explicitly targeted 1+/2+/3+/4+. Skip a stated minimum or range maximum above 5.",
+    "missing_experience": "NEEDS_DETAIL"
+  },
+  "location": {
+    "base_country": "India",
+    "india_modes": [
+      "remote",
+      "hybrid",
+      "onsite"
+    ],
+    "india_city_restriction": null,
+    "outside_india_modes": [
+      "remote"
+    ],
+    "international_remote_must_allow_work_from_india": true,
+    "missing_india_eligibility": "NEEDS_DETAIL"
+  },
+  "compensation": {
+    "currency": "INR",
+    "minimum_annual_ctc": 1500000,
+    "expected_target_annual_ctc": null,
+    "unknown_salary": "NEEDS_DETAIL; do not invent or reject an undisclosed salary as below the minimum.",
+    "range_crossing_minimum": "NEEDS_DETAIL; a possible 15+ offer is not a confirmed eligible salary.",
+    "foreign_currency": "Use only an explicitly normalized INR annual amount with a cited current conversion; no hard-coded exchange rate."
+  },
+  "employment": {
+    "allowed_types": [
+      "full_time"
+    ],
+    "contracts_allowed": false,
+    "internships_allowed": false,
+    "shifts_restricted": false,
+    "bonds_restricted": false
+  },
+  "companies": {
+    "allow_all_other_company_types": true,
+    "excluded_names": [
+      "Responsive.io",
+      "Responsive",
+      "RFPIO"
+    ],
+    "excluded_domains": [
+      "responsive.io",
+      "rfpio.com"
+    ],
+    "matching": "Match the target employer, case-insensitively; never reject a different employer just because its JD mentions responsive design or the candidate works at Responsive."
+  },
+  "cover_letters": {
+    "policy": "always",
+    "scope": "Every job for which application materials are actually prepared, regardless of whether the portal marks the letter optional.",
+    "content": "Evidence-backed, company/job-specific, under 300 words; no invented achievements.",
+    "default_source_format": "Markdown/plain text; produce PDF if an attachment is needed. No DOCX requirement."
+  },
+  "workflow": {
+    "status": "TODO",
+    "default_mode": null,
+    "search_limit": null,
+    "shortlist_limit": null,
+    "tailoring_limit": null,
+    "application_limit": null,
+    "automatic_applications_enabled": false,
+    "decide_later": [
+      "Search-only versus search+tailor versus search+tailor+apply",
+      "Posting recency and per-run limits",
+      "Manual versus scheduled runs and any schedule",
+      "Artifact hosting/link strategy for tracker cells",
+      "Gmail status-check scope and follow-up policy"
+    ],
+    "configuration_note": "TODO means the user will choose execution behavior and limits later; it does not remove the original search, materials, status, nightly or weekly-review capabilities."
+  },
+  "scheduling": {
+    "status": "TODO",
+    "enabled": false,
+    "timezone": "Asia/Kolkata",
+    "time": null,
+    "frequency": null,
+    "supported": true,
+    "configuration_note": "Nightly search/morning reports are retained capabilities. Only activation, time, frequency and run scope remain TODO."
+  },
+  "codex_integration": {
+    "status": "TODO",
+    "installed": false,
+    "required_before_activation": "Align ai-tailor, ai-apply and job-search-orchestrator with these fresh preferences; do not silently fall back to their old city, salary or experience settings."
+  },
+  "artifact_root": "../workflows",
+  "artifact_structure": "company-slug/role-slug-job-id",
+  "capabilities": {
+    "multi_platform_job_search": true,
+    "tailored_pdf_resume_per_selected_job": true,
+    "cover_letter_per_materials_job": true,
+    "application_materials_bundles": true,
+    "google_sheets_application_tracking": true,
+    "gmail_application_status_checks": true,
+    "nightly_search_and_morning_report": true,
+    "weekly_performance_review": true,
+    "rejection_pattern_analysis": true,
+    "keyword_coverage_optimization": true
+  }
+}

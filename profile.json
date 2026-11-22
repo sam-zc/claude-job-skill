@@ -1,0 +1,61 @@
+{
+  "owner": "SANJEEV S",
+  "confirmed_on": "2026-11-23",
+  "contact": {
+    "name": "SANJEEV S",
+    "email": "sam.forgx@gmail.com",
+    "phone": "+919360227383",
+    "city": "Coimbatore",
+    "country": "India",
+    "linkedin": "https://www.linkedin.com/in/sanjeev-s-nyc",
+    "github": "https://github.com/sam-zc",
+    "portfolio": "https://sanjeev.quest"
+  },
+  "experience": {
+    "full_time_years": 3,
+    "resume_wording": "3+ years",
+    "source": "User confirmation and approved BASE; do not count overlapping projects as employment years."
+  },
+  "employment": [
+    {
+      "title": "Frontend Platform Engineer",
+      "company": "RESPONSIVE.IO",
+      "start": "2025-10",
+      "end": null
+    },
+    {
+      "title": "Software Engineer",
+      "company": "RESPONSIVE.IO",
+      "start": "2024-09",
+      "end": "2025-09"
+    },
+    {
+      "title": "Associate Software Engineer",
+      "company": "RESPONSIVE.IO",
+      "start": "2023-07",
+      "end": "2024-08"
+    }
+  ],
+  "notice_period_days": 30,
+  "current_ctc_annual_inr": null,
+  "current_offer": null,
+  "resume": {
+    "file": "assets/frontend-base.pdf",
+    "readable_snapshot": "profile/resume.md",
+    "sha256": "baf4ed23b5878de7c5ae208387d60828962b606c09aaa467d2ebb28235f9cc93",
+    "original_source": "/Users/SANJEEV.S/projects/misc/main-resume/frontend-base.pdf",
+    "format": "PDF",
+    "editing": "direct_pdf_copy_only",
+    "pages": 2,
+    "required_projects": [
+      "Cavemio - Open Source Component Library",
+      "Freelance E-Commerce Platform",
+      "AI-Powered External Source Connector"
+    ]
+  },
+  "supporting_engineering_sources": {
+    "context_root": "../contexts",
+    "resume_references": "../main-resume/references",
+    "use": "Additional evidence only; preferences.json overrides older preferences in those sources."
+  }
+}

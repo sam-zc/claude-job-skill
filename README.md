@@ -1,51 +1,49 @@
-# job-skill
+# Sanjeev's job assistant
 
-AI-powered job search assistant for Indian professionals — built as a Claude Skill.
+Personal configuration and instructions for **SANJEEV S**, based on the supplied Frontend BASE and fresh preferences confirmed on 2026-11-23.
 
-Searches 12+ Indian and global job platforms (Naukri, LinkedIn, Instahyre, Cutshort, Hirist,
-Indeed India, Foundit, Shine, TimesJobs, Glassdoor, WeWorkRemotely, AngelList) plus direct
-company career pages, generates ATS-optimized, human-sounding resumes and cover letters
-tailored to each job posting, scores keyword match, tracks applications, and can automate
-nightly searches with a morning report.
+This repo is being prepared first. The original search/materials/tracking/nightly-report/weekly-review capabilities are retained. Workflow defaults, limits, scheduling activation and Codex integration are explicitly **TODO**; nothing is installed or scheduled by this change.
 
-## Commands
+## Personal sources
 
-- `/job-skill help` — usage guide
-- `/job-skill search` — search all platforms for roles matching your profile
-- `/job-skill automate` — set up a nightly automated search with a morning report
-- `/job-skill status` — check application status (auto-detects rejections/interviews via Gmail if connected)
+| File | Purpose |
+|---|---|
+| [profile.json](profile.json) | Resume-derived identity/career information, notice period and immutable source paths/hash |
+| [preferences.json](preferences.json) | Fresh role/experience/location/pay/employment/company preferences and pending workflow decisions |
+| [tracker.json](tracker.json) | The designated Google Sheets tracker and its existing column mapping |
+| [assets/frontend-base.pdf](assets/frontend-base.pdf) | Byte-identical copy of the supplied resume |
+| [profile/resume.md](profile/resume.md) | Complete approved resume text for fast reading |
+| [SKILL.md](SKILL.md) | Personal assistant instructions; no generic onboarding or foreign-market templates |
 
-Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply to this job: [URL]",
-"What's the status of my applications?"
+The tracker is the existing [Google Sheet, Assignments tab](https://docs.google.com/spreadsheets/d/105thf_TByGIJF1WuEfDbzA_PNDOrN39iMNNQ6-r5TTw/edit?gid=891834841#gid=891834841). It replaces the old local Excel-tracker requirement. Its metadata/header mapping was read, and no rows or formatting were changed.
 
-## Key features
+The source resume and adjacent workspace skills/contexts remain unchanged. Fresh preferences here govern this repo; old ₹17 LPA, four-city and six-year settings are not imported. Current CTC and offer information remain unspecified.
 
-- 13-channel search (12+ job boards + direct company career pages)
-- Tailored resume + cover letter generated per job, written to sound human (no AI clichés,
-  no templated bullet rhythm) rather than obviously AI-generated
-- Internal ATS keyword optimization (target ≥70% match) — never shown as a raw score to the user
-- Application tracker (`job_tracker.xlsx`) with status flow from Found → Applied → Offer/Rejected
-- Gmail-based auto-detection of rejections, interview invites, and assessments
-- **Auto-improvement on rejection patterns**: when Gmail shows repeated or same-day rejections,
-  the skill diagnoses the likely cause (ATS filter vs. targeting vs. seniority mismatch) and
-  automatically tightens keyword matching or search targeting going forward — and always tells
-  you what changed and why
-- Clean output only: no tool/JS/code-block narration, no "let me check X" pauses — just job
-  listings, fitness scores, apply links, and status updates
-- Weekly self-correction review of response/interview/ghosted rates
+## Evaluate a normalized job
 
-## Installation
+The evaluator is a standard-library Python filter for supplied listing facts, not a scraper, live application bot or ATS prediction model. It never searches, writes to the Sheet, edits a resume or submits an application.
 
-Copy `SKILL.md` into your Claude Skills directory (e.g. `~/.claude/skills/job-skill/` or the
-equivalent user-skills path for your Claude setup), or install via your organization's skill
-catalog if available.
+```bash
+rtk proxy python3 scripts/evaluate_job.py /absolute/path/job.json
+rtk proxy python3 -m unittest discover -s tests -v
+```
 
-## Privacy
+Input is one JSON job object or a list of objects. See the test fixtures for field shapes. Output is ELIGIBLE, NEEDS_DETAIL or SKIP with explicit reasons. Unknown salary/experience/India eligibility is preserved as missing detail; known hard exclusions cause SKIP. Exactly 5/5+ is the documented boundary, while the user's priority targets are 1+/2+/3+/4+.
 
-All data stays within the session. Optional Gmail integration only reads emails from companies
-you've applied to — nothing else. The skill never submits applications, creates accounts, or
-handles CAPTCHAs/OTPs/logins on your behalf; you review the morning report and apply manually.
+## Retained features
 
-## License
+- Multi-platform job discovery, verified links, deduplication and fit/gap assessment.
+- A tailored PDF resume plus cover letter for every job selected for materials, with downloadable bundles.
+- The designated Google Sheets tracker, Gmail-based status reconciliation and manual updates.
+- Automatic nightly searches/materials and a morning report when a schedule is configured.
+- Weekly performance review, rejection-pattern analysis and evidence-backed search/material improvements.
 
-MIT — use and adapt freely.
+The document flow is the change: edit a PDF copy directly and verify it, rather than create DOCX files. The spreadsheet destination is your existing Google Sheet. Personal filters come from your fresh answers. Deferring workflow configuration does not remove the nightly capability.
+
+## Still TODO
+
+The user requested deciding workflow later. Leave default search/tailor/apply mode, run limits, posting recency, scheduling, Gmail status-check policy, material hosting and host integration unset until then. Application materials always include a cover letter when a material-generation mode is eventually chosen. No DOCX resume flow or score-chasing rewrite loop is included.
+
+Before integration, align the installed ai-tailor/ai-apply/orchestrator with these fresh settings and the designated Google Sheet. Do not activate their older preferences as a fallback.
+
+License: MIT, retained from the original project.
