@@ -422,9 +422,11 @@ Deliver the actual archive through the available attachment/file tool, or provid
 Read and update the existing Google Sheet linked in Sanjeev's profile, tab `Assignments` (gid `891834841`). Do not create `job_tracker.xlsx`.
 
 **Existing columns (A:S, row 1; enhanced 2026-11-23):**
-`#` | Job Title | Company | Job ID | Platform | Location | Posted Date | Fitness Score | Cover Letter | Resume | Apply Link | Status | Applied By | Applied On | Last Update | Follow-up On | Next Action / Notes | Confirmation / Application ID | Workflow Folder
+`#` | Company | Job Title | Status | Fitness Score | Next Action / Notes | Follow-up On | Applied On | Applied By | Location | Platform | Posted Date | Resume | Cover Letter | Apply Link | Last Update | Job ID | Confirmation / Application ID | Workflow Folder
 
 Read the current headers, relevant rows and status validation before writing. Preserve the existing sheet structure, formulas, formatting and other tabs. Deduplicate by company/requisition ID or canonical job URL. Store verified materials links, or clearly identify local paths; never fabricate hosted links. Record Applied only after a confirmed submission or explicit user report. Keep additional status dates, reasons, notes and review metrics in the job's workflow folder when the sheet has no matching column; report unavailable metrics as unavailable.
+
+**Tracker layout:** The header and columns A:D (identity + Status) are frozen. The sheet uses Roboto, banded rows, colored native chips, percentage shading and an overdue Follow-up On highlight. Columns Q:S are a collapsible details group. Match columns by live header name before every write; never rely on a historical letter mapping. Preserve these formats, groups and pins when adding rows or writing data.
 
 **Tracker write rules:**
 - Status dropdown: Found, Preparing, Ready to apply, Applying, Applied, Acknowledged, Assessment, Interview, Offer, Rejected, Withdrawn, Blocked, Skipped, Closed. Use the exact live validation labels; do not write local IN_PROGRESS/TAILORED enum strings into this column. Map IN_PROGRESS to Preparing or Applying as appropriate; TAILORED becomes Ready to apply only after the cover letter is also checked. A closed listing is Closed, a preference mismatch is Skipped, and missing information/user action is Blocked.
