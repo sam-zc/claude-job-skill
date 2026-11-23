@@ -16,7 +16,11 @@ The original commands, search/scoring, cover letters, bundles, Gmail tracking, n
 and weekly reviews are retained. Resume editing is PDF-only, outputs go under
 `../workflows/<company>/<job>/`, and tracking uses the existing
 [Google Sheet, Assignments tab](https://docs.google.com/spreadsheets/d/105thf_TByGIJF1WuEfDbzA_PNDOrN39iMNNQ6-r5TTw/edit?gid=891834841#gid=891834841).
-Execution preferences, schedule activation and Codex integration remain TODO.
+Execution preferences, schedule activation and broader Codex installation remain TODO.
+Resume generation now calls the existing [local ai-tailor skill](../.agents/skills/ai-tailor/SKILL.md).
+It owns one job’s evidence review, PDF editing and verification; this skill keeps search, ranking,
+cover letters, bundles and tracking. Blocked jobs are reported without stopping the rest of the batch.
+The authoritative BASE is `../main-resume/frontend-base.pdf`; the bundled PDF must match its hash.
 
 ## Commands
 
@@ -33,7 +37,7 @@ Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply t
 - 13-channel search (12+ job boards + direct company career pages)
 - Tailored resume + cover letter generated per job, written to sound human (no AI clichés,
   no templated bullet rhythm) rather than obviously AI-generated
-- Internal ATS keyword optimization (target ≥70% match) — never shown as a raw score to the user
+- Internal evidence-backed keyword optimization (70% coverage guide, not a completion gate) — never shown as a raw score to the user
 - Application tracker (existing Google Sheet) with status flow from Found → Applied → Offer/Rejected
 - Gmail-based auto-detection of rejections, interview invites, and assessments
 - **Auto-improvement on rejection patterns**: when Gmail shows repeated or same-day rejections,
@@ -46,9 +50,12 @@ Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply t
 
 ## Installation
 
-Copy `SKILL.md`, `assets/` and `profile/` together into your Claude Skills directory (e.g. `~/.claude/skills/job-skill/` or the
-equivalent user-skills path for your Claude setup), or install via your organization's skill
-catalog if available.
+This personal integration runs from `/Users/SANJEEV.S/projects/misc`, with this repository at
+`claude-job-skill/`. It requires the existing sibling `.agents/skills/ai-tailor/` (including its
+scripts and `references/local-export.md`), `contexts/`, and `main-resume/`. Those local dependencies
+are maintained in the workspace, not bundled in this repository. ai-tailor uses the installed
+PDF, resume-review and tech-resume-optimizer skills. Read its dependency requirements before a run.
+Copying this repository alone does not install those dependencies or activate a nightly schedule.
 
 ## Privacy
 
