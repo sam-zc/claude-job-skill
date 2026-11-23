@@ -421,10 +421,18 @@ Deliver the actual archive through the available attachment/file tool, or provid
 
 Read and update the existing Google Sheet linked in Sanjeev's profile, tab `Assignments` (gid `891834841`). Do not create `job_tracker.xlsx`.
 
-**Existing columns (A:L, row 1):**
-`#` | Job Title | Company | Job ID | Platform | Location | Posted Date | Fitness Score | Cover Letter | Resume | Apply Link | Status
+**Existing columns (A:S, row 1; enhanced 2026-11-23):**
+`#` | Job Title | Company | Job ID | Platform | Location | Posted Date | Fitness Score | Cover Letter | Resume | Apply Link | Status | Applied By | Applied On | Last Update | Follow-up On | Next Action / Notes | Confirmation / Application ID | Workflow Folder
 
 Read the current headers, relevant rows and status validation before writing. Preserve the existing sheet structure, formulas, formatting and other tabs. Deduplicate by company/requisition ID or canonical job URL. Store verified materials links, or clearly identify local paths; never fabricate hosted links. Record Applied only after a confirmed submission or explicit user report. Keep additional status dates, reasons, notes and review metrics in the job's workflow folder when the sheet has no matching column; report unavailable metrics as unavailable.
+
+**Tracker write rules:**
+- Status dropdown: Found, Preparing, Ready to apply, Applying, Applied, Acknowledged, Assessment, Interview, Offer, Rejected, Withdrawn, Blocked, Skipped, Closed. Use the exact live validation labels; do not write local IN_PROGRESS/TAILORED enum strings into this column. Map IN_PROGRESS to Preparing or Applying as appropriate; TAILORED becomes Ready to apply only after the cover letter is also checked. A closed listing is Closed, a preference mismatch is Skipped, and missing information/user action is Blocked.
+- Applied By: Manual or Agent, set only for a confirmed submission. Auto Applied is no longer a status. Preserve Applied By, Applied On and confirmation history when the employer stage later changes.
+- Applied On: confirmed submission date. Last Update: actual substantive verification date. Use native date values in Asia/Kolkata, matching the workbook timezone; do not stamp fabricated application dates. Follow-up On is a selected due date, not permission to send outreach; preserve an existing reminder unless explicitly changed/completed.
+- Next Action / Notes: concise nonsecret blocker or next step. Confirmation / Application ID: actual employer reference or nonsecret evidence link. Workflow Folder: the exact existing workflows/company/job path. Leave unknown fields blank and retain detailed evidence locally.
+- Fitness Score is a native percentage: write 0.85 for 85%, never 85 into a percentage-formatted cell. Retain the explanation in analysis/report.
+- Preserve native chip presentation/colors. For added rows, copy safe formatting/validation from a blank peer, clear row-specific content, extend the filter/rules as needed and re-read headers/validation before writing. The current grid is a template, not a fixed job limit.
 
 **Status milestones (branches, not a required sequence):** Found → Ready to Apply → Applied → Acknowledged / Assessment / Interview → Offer or Rejected when evidenced. Follow the existing Sheet’s validation. A long wait is Pending / no response, not a proven rejection or reason to overwrite APPLIED history. Keep local preparation/submission status separate from later employer outcomes; record nonsecret outcome evidence in the job folder, and reconcile explicit user-reported submissions into the local manifest before another apply attempt.
 
