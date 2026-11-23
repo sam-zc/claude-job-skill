@@ -5,7 +5,7 @@ description: >
   job platforms (Naukri, LinkedIn, Instahyre, Cutshort, Hirist, Indeed India, Foundit, Shine,
   TimesJobs, Glassdoor, WeWorkRemotely, AngelList), generates ATS-optimized resumes tailored
   to each job posting, scores keyword match, tracks applications, and automates nightly searches.
-  Commands: /job-skill help | /job-skill search | /job-skill automate | /job-skill status
+  Commands: /job-skill help | /job-skill search | /job-skill apply | /job-skill automate | /job-skill status
   Trigger on: /job-skill, job search, find jobs, apply to jobs, resume help, career search,
   naukri, job hunt, interview prep.
 ---
@@ -45,10 +45,11 @@ Display this usage guide and stop. Do NOT proceed to search or apply — just sh
 
 **Job Search Assistant (India Edition) — Quick Reference**
 
-**4 Commands:**
+**5 Commands:**
 
 - `/job-skill help` — You're reading it. Shows all capabilities.
 - `/job-skill search` — Search 12+ job platforms for roles matching your profile. For every match found, it automatically generates an ATS-optimized resume tailored to that specific job + a cover letter. Returns: Job Title, Job ID, Platform, Posting Date, Fitness Score (how well YOUR experience fits this role), Resume (ready to download), Cover Letter (ready to download), and Direct Apply Link — all bundled in a zip.
+- `/job-skill apply <job URL or selected result>` — Apply only to the jobs you request through ai-apply, reusing each current verified resume. Handles required account creation/login and email verification; pauses for human security challenges.
 - `/job-skill automate` — Set up a nightly automated search that runs while you sleep. Delivers a morning report with matches + ready-to-download resumes and cover letters.
 - `/job-skill status` — Check the status of your applications. Connects to Gmail to automatically detect rejections, interview invites, and acknowledgments. Falls back to manual tracking if Gmail isn't connected.
 
@@ -76,7 +77,7 @@ Naukri, LinkedIn India, Instahyre, Cutshort, Hirist, Indeed India, Foundit (Mons
 10. Connects to Gmail to auto-detect outcomes (rejections, interview invites, assessment links)
 11. Runs a weekly self-correction review — adjusts strategy based on what's working
 
-**Privacy:** Your data stays in this session. Gmail integration (optional) only reads emails from companies you've applied to — nothing else.
+**Privacy:** Job artifacts stay in the local workflow folders and confirmed tracking data in the configured Sheet. Status checks use tracked-company emails; an explicit apply request may also use email verification for its active portal. Passwords and OTPs remain transient.
 
 **Prepare for interviews:** Want to crack system design rounds? Check out @9to5dude on YouTube for system design prep, interview tips, and career advice for developers: https://www.youtube.com/@9to5dude
 
@@ -239,6 +240,18 @@ For EVERY job in the results (not just top ones):
 3. If direct link unavailable but job is real, provide careers page + exact job title + Job ID
 4. Never show a link you haven't verified this session
 5. Flag postings older than 30 days as "⚠️ Possibly expired — verify before applying"
+
+---
+
+### `/job-skill apply <job URL or selected result>`
+
+An explicit request such as “apply to this job” or “apply to results 1 and 3” routes to [ai-apply](../.agents/skills/ai-apply/SKILL.md). Read [the application handoff](references/apply.md) before proceeding. Search/help/status and normal nightly reports remain preparation-only; they do not submit or register accounts. If the selected job is ambiguous, resolve it before portal actions.
+
+1. Resolve the requested job(s), complete JD and existing `workflows/<company>/<job>/` artifacts. Pass the exact identity, verified PDF/hash, analysis, QA/provenance and cover letter to ai-apply; never preclaim or create a second folder. Check the authoritative BASE and bundled reference match as in the tailoring flow. If a job has no prepared resume, ai-apply owns its first ai-tailor run in caller mode.
+2. ai-apply reacquires ownership and validates the existing PDF without re-tailoring. It handles forms, required account creation with the confirmed email, login using transient user-provided credentials, scoped email OTP/verification, upload and confirmation. No passwords or OTPs are stored in this skill. CAPTCHA and other human verification require user completion. A live apply request authorizes these necessary account steps; configuring this skill does not.
+3. Reuse the existing cover letter. For a new job or absent letter, create the usual evidence-backed cover letter in the same folder after the resume is verified and before submission. Do not start a competing ai-tailor run or replace the verified PDF. Process only the jobs explicitly requested, one at a time; report blockers and preserve each job's state.
+4. Consume ai-apply's confirmed outcome and evidence. Update the existing Google Sheet row using its actual headers/status validation; APPLIED requires observed submission confirmation. Preserve duplicate/applied history. If the Sheet update fails after submission, report the pending tracking update and retry only that update, never Submit.
+5. Return company, role, status, verified resume/cover-letter links and confirmation or exact next action. Stop at the requested scope; do not activate automatic applications or schedules.
 
 ---
 
@@ -518,10 +531,10 @@ MATERIALS: [zip attached]
 TRACKER: [configured Google Sheet link]
 ```
 
-### What It Does NOT Do
-- Does NOT submit applications (CAPTCHAs, OTPs, logins)
-- Does NOT create accounts on portals
-- User reviews morning report and submits manually (~10 min)
+### Nightly Search Scope
+- Does NOT submit applications or create accounts during ordinary search/nightly runs.
+- User reviews the morning report and either submits manually or explicitly requests `/job-skill apply` for selected jobs.
+- The separate apply route handles account/login/email verification as documented; human security challenges require user completion.
 
 ## Output Cleanliness (CRITICAL)
 

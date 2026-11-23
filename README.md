@@ -20,12 +20,15 @@ Execution preferences, schedule activation and broader Codex installation remain
 Resume generation now calls the existing [local ai-tailor skill](../.agents/skills/ai-tailor/SKILL.md).
 It owns one job’s evidence review, PDF editing and verification; this skill keeps search, ranking,
 cover letters, bundles and tracking. Blocked jobs are reported without stopping the rest of the batch.
+Explicit application requests use [the ai-apply handoff](references/apply.md), including prepared-PDF reuse,
+account/login/email verification and confirmed tracking. Search and nightly runs remain preparation-only.
 The authoritative BASE is `../main-resume/frontend-base.pdf`; the bundled PDF must match its hash.
 
 ## Commands
 
 - `/job-skill help` — usage guide
 - `/job-skill search` — search all platforms for roles matching your profile
+- `/job-skill apply <job URL or selected result>` — apply on request using the current verified PDF through local ai-apply
 - `/job-skill automate` — set up a nightly automated search with a morning report
 - `/job-skill status` — check application status (auto-detects rejections/interviews via Gmail if connected)
 
@@ -52,16 +55,19 @@ Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply t
 
 This personal integration runs from `/Users/SANJEEV.S/projects/misc`, with this repository at
 `claude-job-skill/`. It requires the existing sibling `.agents/skills/ai-tailor/` (including its
-scripts and `references/local-export.md`), `contexts/`, and `main-resume/`. Those local dependencies
+scripts and `references/local-export.md`), sibling `.agents/skills/ai-apply/` with its upload guard,
+`contexts/`, and `main-resume/`. Those local dependencies
 are maintained in the workspace, not bundled in this repository. ai-tailor uses the installed
 PDF, resume-review and tech-resume-optimizer skills. Read its dependency requirements before a run.
 Copying this repository alone does not install those dependencies or activate a nightly schedule.
 
 ## Privacy
 
-All data stays within the session. Optional Gmail integration only reads emails from companies
-you've applied to — nothing else. The skill never submits applications, creates accounts, or
-handles CAPTCHAs/OTPs/logins on your behalf; you review the morning report and apply manually.
+Job artifacts are local; tracking uses the configured Google Sheet. Gmail status checks are scoped
+to tracked companies, and explicit applications may read active-portal verification messages.
+Apply requests can create required accounts and use transient credentials/email OTPs. Passwords,
+OTPs and signed verification links are never saved in skills, artifacts or Git. Human security
+challenges require the user's completion. No applications are submitted during ordinary searches.
 
 ## License
 
