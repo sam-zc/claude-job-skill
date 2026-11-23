@@ -17,7 +17,7 @@ and weekly reviews are retained. Resume editing is PDF-only, outputs go under
 `../workflows/<company>/<job>/`, and tracking uses the existing
 [Google Sheet, Assignments tab](https://docs.google.com/spreadsheets/d/105thf_TByGIJF1WuEfDbzA_PNDOrN39iMNNQ6-r5TTw/edit?gid=891834841#gid=891834841).
 Execution preferences, schedule activation and broader Codex installation remain TODO.
-Resume generation now calls the existing [local ai-tailor skill](../.agents/skills/ai-tailor/SKILL.md).
+Resume generation now calls the bundled [ai-tailor skill](skills/ai-tailor/SKILL.md).
 It owns one job’s evidence review, PDF editing and verification; this skill keeps search, ranking,
 cover letters, bundles and tracking. Blocked jobs are reported without stopping the rest of the batch.
 Explicit application requests use [the ai-apply handoff](references/apply.md), including prepared-PDF reuse,
@@ -28,7 +28,7 @@ The authoritative BASE is `../main-resume/frontend-base.pdf`; the bundled PDF mu
 
 - `/job-skill help` — usage guide
 - `/job-skill search` — search all platforms for roles matching your profile
-- `/job-skill apply <job URL or selected result>` — apply on request using the current verified PDF through local ai-apply
+- `/job-skill apply <job URL or selected result>` — apply on request using the current verified PDF through bundled ai-apply
 - `/job-skill automate` — set up a nightly automated search with a morning report
 - `/job-skill status` — check application status (auto-detects rejections/interviews via Gmail if connected)
 
@@ -53,13 +53,45 @@ Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply t
 
 ## Installation
 
-This personal integration runs from `/Users/SANJEEV.S/projects/misc`, with this repository at
-`claude-job-skill/`. It requires the existing sibling `.agents/skills/ai-tailor/` (including its
-scripts and `references/local-export.md`), sibling `.agents/skills/ai-apply/` with its upload guard,
-`contexts/`, and `main-resume/`. Those local dependencies
-are maintained in the workspace, not bundled in this repository. ai-tailor uses the installed
-PDF, resume-review and tech-resume-optimizer skills. Read its dependency requirements before a run.
-Copying this repository alone does not install those dependencies or activate a nightly schedule.
+Both skills, their review/PDF procedures, helper scripts, upload guards and tests are versioned here:
+
+```text
+SKILL.md
+references/apply.md
+skills/
+  ai-tailor/SKILL.md, references/, scripts/
+  ai-apply/SKILL.md, references/, scripts/
+assets/frontend-base.pdf
+```
+
+No separately installed PDF, resume-review, tech-resume-optimizer, ai-tailor or ai-apply skill is
+required. Run commands from this repository root. Browser/search/email/Sheets access is supplied
+by the running agent's tools; no account credentials are bundled.
+
+The data workspace remains `/Users/SANJEEV.S/projects/misc`: its `main-resume/` and `contexts/`
+are private source inputs, and `workflows/` contains job outputs. Pass that location as `--workspace`.
+These data folders are not skills and are not copied into Git. The BASE in `main-resume/` remains
+authoritative; `assets/frontend-base.pdf` is its checked reference copy and the test fixture.
+Tests run from the repository without those external data folders, using temporary workspaces.
+
+For this checkout, the former `.agents/skills/ai-tailor` and `.agents/skills/ai-apply` directories
+are discovery symlinks pointing into `skills/`. They contain no independent copies. When cloning
+elsewhere, register these skill directories with the host if direct skill discovery is desired;
+job-skill itself reads them through repository-relative links.
+
+Use Python 3.10+ and install Poppler with the platform package manager (`brew install poppler`
+on macOS). Prepare an isolated Python environment and run the checks:
+
+```sh
+rtk proxy python3 -m venv .venv
+rtk proxy .venv/bin/python -m pip install -r skills/ai-tailor/scripts/requirements.txt
+rtk proxy .venv/bin/python -m unittest discover -s skills/ai-tailor/scripts -p 'test_*.py'
+rtk proxy .venv/bin/python -m unittest discover -s skills/ai-apply/scripts -p 'test_*.py'
+```
+
+For actual runs, set `PDF_PYTHON` to the absolute path of the prepared Python executable and use
+the helper commands in each skill. Poppler and the pinned Python packages are runtime dependencies,
+not skill dependencies. No schedule or application is started by installation or testing.
 
 ## Privacy
 

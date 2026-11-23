@@ -4,7 +4,7 @@ Use this procedure only when the user asks to apply to identified jobs. Search, 
 
 ## Responsibilities and input
 
-`job-skill` calls the existing local `../../.agents/skills/ai-apply/SKILL.md` from this reference file. Execute in the same agent, one job at a time. Pass company, role, requisition, canonical URL/aliases, complete captured JD, exact existing job folder, verified final PDF path/hash, intended text, analysis and QA/provenance locations, and any existing cover letter. Include the requested application scope; do not select additional jobs implicitly. Missing local skill/helpers block application, not trigger an improvised submission flow.
+`job-skill` calls the bundled [ai-apply](../skills/ai-apply/SKILL.md). Execute in the same agent, one job at a time. Pass company, role, requisition, canonical URL/aliases, complete captured JD, exact existing job folder, verified final PDF path/hash, intended text, analysis and QA/provenance locations, and any existing cover letter. Include the requested application scope; do not select additional jobs implicitly. Missing bundled skill/helpers block application, not trigger an improvised submission flow.
 
 ai-apply owns the application claim, portal session, upload checks, submission, confirmation and local job state. job-skill owns Sheet updates and the batch report. All job artifacts stay in the existing `workflows/<company>/<job>/` folder. Never put credentials, OTPs, session tokens or signed verification links in artifacts, Sheet cells, logs, command arguments or commits.
 
