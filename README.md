@@ -35,6 +35,9 @@ The authoritative BASE is `main-resume/frontend-base.pdf`; the reference copy in
 Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply to this job: [URL]",
 "What's the status of my applications?"
 
+The [tracker status guide](docs/tracker-statuses.md) explains all 14 chips, transitions,
+Applied By, confirmation evidence and how Sheet stages differ from local workflow status.
+
 ## Key features
 
 - 13-channel search (12+ job boards + direct company career pages)

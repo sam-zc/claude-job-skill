@@ -419,6 +419,8 @@ Deliver the actual archive through the available attachment/file tool, or provid
 
 ## Application Tracking
 
+Read the [tracker status guide](../../docs/tracker-statuses.md) for each stage’s meaning, evidence and transition rules.
+
 Read and update the existing Google Sheet linked in Sanjeev's profile, tab `Assignments` (gid `891834841`). Do not create `job_tracker.xlsx`.
 
 **Existing columns (A:S, row 1; enhanced 2026-11-23):**
