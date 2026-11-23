@@ -68,7 +68,7 @@ def verify_qa(job, qa_dir, provenance, expected_sha256, page_count):
     review = read('review.json')
     candidate = inside(qa / 'candidate.pdf', job)
     if (status.get('status') != 'MECHANICAL_PASS_AGENT_VISUAL_REVIEW_REQUIRED'
-            or not checks.get('mechanical_checks_passed') or not isinstance(checks.get('checks'), dict)
+            or checks.get('mechanical_checks_passed') is not True or not isinstance(checks.get('checks'), dict)
             or not checks['checks']
             or not all(value is True for value in checks['checks'].values())):
         raise ValueError('Mechanical QA did not pass')

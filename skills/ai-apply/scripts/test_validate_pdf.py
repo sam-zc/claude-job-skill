@@ -97,6 +97,14 @@ class UploadGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Mechanical QA did not pass'):
             self.check()
 
+    def test_nonboolean_mechanical_pass_does_not_authorize_upload(self):
+        evidence = self.qa / 'qa/final/checks.json'
+        original = json.loads(evidence.read_text())
+        for invalid in ('false', 'true', 1):
+            evidence.write_text(json.dumps({**original, 'mechanical_checks_passed': invalid}))
+            with self.assertRaisesRegex(ValueError, 'Mechanical QA did not pass'):
+                self.check()
+
     def test_altered_QA_candidate_blocks_upload(self):
         (self.qa / 'candidate.pdf').write_bytes(b'changed candidate')
         with self.assertRaisesRegex(ValueError, 'checked QA candidate'):

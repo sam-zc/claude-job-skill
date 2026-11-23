@@ -82,7 +82,7 @@ If output reaches three pages, shorten repetition, combine related work within i
 
 ## 5. Save and verify the edited PDF
 
-Execute [references/local-export.md](references/local-export.md). Save a fresh edited-PDF iteration, run `scripts/verify_job.py` against independently prepared `expected.txt`, investigate raw extractor differences, and visually inspect every final PDF page. Repeat after any edit/save. Fix content, layout, glyph or link defects in the job PDF and rerun the full cycle.
+Execute [references/local-export.md](references/local-export.md). Save a fresh edited-PDF iteration, run `skills/ai-tailor/scripts/verify_job.py` against independently prepared `expected.txt`, investigate raw extractor differences, and visually inspect every final PDF page. Repeat after any edit/save. Fix content, layout, glyph or link defects in the job PDF and rerun the full cycle.
 
 Verify copied BASE → intended edits → final PDF wording/order, bullets, font/Unicode mappings, links, BASE-relative header/employment geometry and role associations. Preserve existing accessibility tagging; adding tags is not required merely because the selected BASE is untagged. Retain raw modes/versions and meaningful differences; line counts are diagnostics. Check supported JD phrases in final PDF text or explain omission. Inspect readability, clipping, overlap, orphans and section boundaries. A mechanical pass alone is not TAILORED. Never strip tags, globally remove Unicode, rasterize/outline text or hide discrepancies to force a pass.
 
@@ -102,7 +102,7 @@ workflows/
       source/protected-hashes.json
       resume.pdf
       expected.txt
-      <company-role-jobid>-resume.pdf
+      <company-slug>-<role-slug>-<job-id>-resume.pdf
       exports/<iteration>/direct.pdf, expected.txt, provenance.json
       qa/<iteration>/... raw text, fonts, maps, links, diffs, checks, page PNGs
 ```
@@ -111,4 +111,4 @@ workflows/
 
 Record capture/copy/export times, lineage and working/raw/final PDF hashes, BASE-to-edited-PDF change comparison, pages, mechanical checks, page-by-page visual observations, extraction differences, fonts/links/bullets, phrase dispositions, protected comparisons and live ATS status. No remote ID/URL or Rezi score is required. Never invent a pass for an unperformed check.
 
-Only after evidence, mechanical, agent visual and protection gates pass, copy checked candidates to final filenames and record `TAILORED — resume verified; application not submitted`. Update the log through the helper, preserving APPLIED history. Release only this invocation's locks; caller-owned claims remain with ai-apply. Optional referral drafts may be saved, never sent. Never create application.md. Return the local PDF and analysis links, concise changes and material limitations. Stop here.
+Only after evidence, mechanical, agent visual and protection gates pass, copy the checked candidate to `<company-slug>-<job-folder>-resume.pdf` inside the job folder (the canonical filename required by ai-apply) and record `TAILORED — resume verified; application not submitted`. Update the log through the helper, preserving APPLIED history. Release only this invocation's locks; caller-owned claims remain with ai-apply. Optional referral drafts may be saved, never sent. Never create application.md. Return the local PDF and analysis links, concise changes and material limitations. Stop here.

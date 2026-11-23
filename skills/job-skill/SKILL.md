@@ -35,7 +35,7 @@ Resolve this skill's physical directory; the repository root is two levels above
 - **Tracker**: Use the [existing Google Sheet](https://docs.google.com/spreadsheets/d/105thf_TByGIJF1WuEfDbzA_PNDOrN39iMNNQ6-r5TTw/edit?gid=891834841#gid=891834841), tab `Assignments` (gid `891834841`), instead of a local Excel tracker.
 - **Workflow configuration — TODO**: Decide execution preferences, run limits, schedule activation/time and broader Codex installation later. The local ai-tailor handoff below is configured. Keep the original search, materials, Gmail/status, nightly reports, weekly review and rejection-analysis capabilities below; this TODO does not disable them or activate a schedule.
 
-Apply these preferences before the existing fitness scoring and materials workflow. If a job's required experience, pay, employment type or permission to work remotely from India is unclear, flag the missing detail rather than inventing eligibility. Do not recollect confirmed profile information.
+Read `contexts/personal.md` as the shared authority for current preferences and application answers; the summary above must agree with it. Apply these preferences before the existing fitness scoring and materials workflow. If a job's required experience, pay, employment type or permission to work remotely from India is unclear, flag the missing detail rather than inventing eligibility. Do not recollect confirmed profile information.
 
 ## Commands
 
@@ -57,7 +57,7 @@ Display this usage guide and stop. Do NOT proceed to search or apply — just sh
 
 **Natural language also works:**
 - "Find me React jobs in Bangalore"
-- "Search for data science roles in Pune, 15-25 LPA"
+- "Search for frontend roles in Pune, 15-25 LPA"
 - "Apply to this job: [paste URL]"
 - "What's the status of my applications?"
 - "Any responses from companies I applied to?"
@@ -95,12 +95,12 @@ Search for jobs matching the user's profile across all platforms. This is the co
 
 **CRITICAL — Unattended / Scheduled Task Detection:**
 If running as a scheduled task or unattended session:
-- Do NOT use AskUserQuestion — it will block forever
+- Do not ask interactive questions; record unresolved mandatory details as blockers for that job
 - Search ALL the user's target locations and roles
 - Generate resume + cover letter for ALL matches Fitness >= 60%
 - Make all decisions autonomously and document them in the report
 
-**If the user IS present (interactive)**, optionally ask (via AskUserQuestion):
+**If the user IS present (interactive)**, use any already supplied scope; ask through an available host input tool only when an unresolved choice matters:
 - Narrow to a specific city? (Bangalore / Hyderabad / Pune / Mumbai / Delhi-NCR / All India / Remote)
 - Specific role type?
 - Posted in last 24h / 48h / 7 days?
@@ -144,16 +144,13 @@ Good targets by company type:
 - **Product Companies India**: Flipkart, Razorpay, PhonePe, Zerodha, CRED, Groww, Swiggy, Zomato, Ola, Meesho, ShareChat, Dream11
 - **Global MNCs (India offices)**: Adobe, Salesforce, Oracle, SAP, Cisco, VMware, Nvidia, Qualcomm, Intel, Samsung R&D, Goldman Sachs, Morgan Stanley, JP Morgan, Deutsche Bank
 - **Mid-tier Product**: Atlassian, Freshworks, Zoho, Postman, BrowserStack, Hasura, Chargebee
-- **Service (if user wants)**: TCS, Infosys, Wipro, HCL, Tech Mahindra, Cognizant, Capgemini
+- **Service (allowed)**: TCS, Infosys, Wipro, HCL, Tech Mahindra, Cognizant, Capgemini
 
-**If user is also looking abroad**, additionally search:
-- Arbeitnow, Relocate.me, Jaabz (visa-sponsorship confirmed platforms)
-- Country-specific boards (Seek for Australia, StepStone for Germany, Reed for UK, Bayt for UAE)
-- Use the same search patterns but with the target country
+**For international remote roles**, additionally search relevant global/country boards with remote and India-eligibility terms. Verify the actual listing permits work from India; visa sponsorship or a foreign remote label alone does not establish eligibility. Exclude foreign onsite/hybrid and relocation-only listings.
 
 #### Result Format (CRITICAL)
 
-**Every search result is a COMPLETE application package.** The search doesn't just find jobs — it finds them, scores them, generates a tailored ATS-optimized resume for each one, writes a cover letter, and bundles everything for download. The user gets results + ready-to-submit materials in one shot.
+**Every eligible result is prepared as a complete application package when the required checks succeed.** Unresolved details, failed verification and duplicates are reported with their actual outcome; never promise ready materials for them. The search doesn't just find jobs — it finds them, scores them, generates a tailored ATS-optimized resume for each one, writes a cover letter, and bundles everything for download. The user gets results + ready-to-submit materials in one shot.
 
 For each job found, **automatically generate**:
 1. A resume tailored to THAT specific job description (ATS-optimized, keyword-matched)
@@ -174,7 +171,7 @@ Then present results in this table:
   - LinkedIn: Job ID from URL (`linkedin.com/jobs/view/3912345678`)
   - Indeed: Job key from URL
   - Other platforms: Reference/req number from the listing
-  - If none visible: `[Platform]-[Company]-[ShortTitle]` (e.g., `NAU-Google-SDE2`)
+  - If none visible: label it as a local ID using ai-tailor’s `url-<12 SHA256 hex>` or `text-<12 SHA256 hex>` identity rule; preserve that exact ID across search, folders, manifests and tracker. Never invent an employer requisition.
 - **Platform**: Where it was found (Naukri / LinkedIn / Instahyre / etc.)
 - **Location**: City, State or "Remote"
 - **Posted Date**: Actual date the job was posted:
@@ -197,12 +194,12 @@ Then present results in this table:
 
 **Below the table**, for each result provide a 1-2 line explanation of why it matches + what was customized:
 ```
-1. Google — SDE2 — 87% Fit: You have 4/5 required skills (Python, Django, REST, Docker — missing Kubernetes). 4 years exp vs 3-5 required = perfect range. Your API scaling project at [prev company] directly maps to their platform team. Resume tailored, cover letter highlights your 10M-user system.
-2. Razorpay — Backend Engineer — 72% Fit: Strong on Go + distributed systems. Slight gap on fintech domain experience, but your payment module project covers it. 3 years exp vs 3-6 required = fits. Resume customized, cover letter connects your backend scaling work.
-3. Startup XYZ — Senior Engineer — 55% Fit ⚠️ STRETCH: Needs 6+ years (you have 4). Core skills match but seniority is a gap. Still worth applying if you're interested — resume positioned to emphasize depth over years.
+1. Example Product Company — Frontend Engineer — 87% Fit: React/TypeScript components and accessibility map to the JD. Your 3+ years fit its 2–4-year requirement. Resume and cover letter ready only after checks pass.
+2. Example Commerce — Frontend-focused Full Stack Engineer — 72% Fit: Next.js commerce and GraphQL project evidence are relevant; required domain experience is a gap. A 1+ requirement is eligible. Materials status reflects actual completion.
+3. Example Senior Role — SKIPPED: Requires 6+ years, above the confirmed cap. No resume generated and no application submitted.
 ```
 
-**Materials zip structure (auto-generated, auto-delivered via SendUserFile):**
+**Materials zip structure (auto-generated; deliver using the host’s file/attachment mechanism or a local link):**
 ```
 [Name]_Applications_[Date].zip
 ├── Google_Bangalore/[Job]/
@@ -237,10 +234,10 @@ For EVERY job in the results (not just top ones):
 
 #### Link Quality Rules (CRITICAL)
 
-1. Use WebFetch on each job URL to confirm it loads (200 status)
-2. Drop any link returning 404, 403, "job not found", or "position filled"
-3. If direct link unavailable but job is real, provide careers page + exact job title + Job ID
-4. Never show a link you haven't verified this session
+1. Use the available web/page-reading tools to verify each job URL and its current company, title, requisition and open state.
+2. Drop confirmed 404, "job not found" or "position filled" listings. A 403, login wall or anti-bot page is access-unverified, not proof the job closed; try the official careers source or authorized browser and report unresolved access.
+3. If a verified official listing has no direct apply URL, provide its careers page + exact job title + Job ID.
+4. Distinguish verified live links from access-unverified candidates; do not prepare or mark a candidate ready without a complete verified JD.
 5. Flag postings older than 30 days as "⚠️ Possibly expired — verify before applying"
 
 ---
@@ -295,10 +292,10 @@ Check the status of all tracked applications. This command connects to Gmail (if
    PENDING (no response yet):
    - Amazon (applied 5 Aug) — 10 days, still within normal range
    - Zerodha (applied 1 Aug) — 14 days, consider following up
-   - PhonePe (applied 20 Jul) — 26 days ⚠️ likely ghosted
+   - PhonePe (applied 20 Jul) — 26 days, no response; outcome unconfirmed
 
    STATS:
-   Total applied: 15 | Responses: 6 (40%) | Interviews: 2 | Rejected: 3 | Ghosted: 1
+   Total applied: 15 | Responses: 6 (40%) | Interviews: 2 | Rejected: 3 | Long-pending: 1
    ```
 
 #### Without Gmail (Manual Mode):
@@ -315,20 +312,20 @@ When the user first runs `/job-skill status`, if Gmail isn't connected:
 "I can connect to your Gmail to automatically check for application responses — rejections, interview invites, assessment links. I'll ONLY search for emails from companies in your tracker. Want to set this up?"
 
 If yes:
-1. Use SearchMcpRegistry to find the Gmail connector
-2. Use SuggestConnectors to prompt the user to connect
-3. Once connected, run the status check
+1. Discover the host’s available Gmail/connector capabilities.
+2. If unavailable, use the host’s supported connection setup or explain the missing connection and offer manual tracking. Do not invent a connector tool or claim it is connected.
+3. Once connected and authorized, run the scoped status check.
 
 If no:
 - Use manual mode (ask user for updates)
 - Remind them once more after 10+ applications: "You have 12 tracked applications now. Gmail auto-tracking would save you time — want to reconsider?"
 
 **Gmail privacy (explain if asked):**
-- Only searches for emails from company domains in your job tracker
-- Reads subject lines and sender info to determine outcomes
+- Search only tracked-company/application threads; verify the specific requisition or job before updating its row. If a company has several applications and an email cannot be matched, leave their statuses unchanged and report the ambiguity.
+- Read sender, subject and the relevant message body when needed; keywords alone do not prove an offer, interview or rejection
 - Does NOT read personal emails, promotions, or anything unrelated to job applications
 - Does NOT send emails on your behalf
-- You can disconnect anytime from Claude settings
+- You can disconnect through the host’s account/connection settings
 
 ---
 
@@ -336,7 +333,7 @@ If no:
 
 Set up a nightly automated job search. Walk the user through:
 
-1. **Preferred time** (use AskUserQuestion):
+1. **Preferred time** (reuse confirmed settings or collect the missing choice with the host’s available input mechanism):
    - "What time should the nightly search run?"
    - Options: "11:00 PM", "11:30 PM", "12:00 AM", "Custom time"
    - Default timezone: IST
@@ -344,15 +341,15 @@ Set up a nightly automated job search. Walk the user through:
 2. **Frequency**:
    - "How often?" — "Every night", "Weekdays only", "Every other day", "Weekly (Sunday night)"
 
-3. **Convert to UTC cron** and create the scheduled task using `create_trigger`:
+3. **Use the host’s actual scheduling tool** and its supported timezone/schedule format. Discover that tool first; if unavailable, report scheduling as unavailable and do not claim activation. Prefer `Asia/Kolkata` when supported. Only for a scheduler requiring UTC cron, use these conversions:
    - IST = UTC + 5:30
    - 11:00 PM IST = 5:30 PM UTC → `30 17 * * *`
    - 11:30 PM IST = 6:00 PM UTC → `0 18 * * *`
    - 12:00 AM IST = 6:30 PM UTC → `30 18 * * *`
-   - Weekdays only: add `1-5` as day-of-week
+   - 11:00/11:30 PM IST weekdays: UTC day-of-week `1-5`. Midnight IST weekdays fall on the previous UTC day: use `0-4`. Prefer timezone-aware scheduling to avoid this shift.
 
 4. **The scheduled task prompt** must include:
-   - The user's full profile and preferences (each firing starts a fresh session)
+   - The checkout’s absolute repository root and `skills/job-skill/SKILL.md`; each run must read the current `contexts/personal.md` and resume sources rather than embed stale preferences
    - Instructions to run `/job-skill search` in unattended mode
    - Generate resume + cover letter for top matches
    - Bundle materials in a zip
@@ -360,35 +357,15 @@ Set up a nightly automated job search. Walk the user through:
    - If Gmail is connected, run `/job-skill status` too
    - Send the morning report
 
-5. **Confirm:**
-   "Your nightly job search is live — runs at 11:30 PM IST every day. You'll wake up to a report with matched jobs, tailored resumes, and apply links. Say 'update my job schedule' or 'cancel automation' anytime."
+5. **Confirm only after the host returns successful creation/read-back:** report the actual enabled state, schedule, timezone and scope. Do not use a canned success message or enable applications as part of the nightly search.
 
 ---
 
 ## Resume Formatting
 
-For Sanjeev, the approved two-page PDF BASE takes precedence over generic market-format suggestions below. Keep its existing projects and do not add unsupported personal details, scores or eligibility claims.
+Use the approved two-page Calibri BASE for both Indian and India-compatible international remote roles. Preserve its contact/header links, employment dates/role associations and three projects. Do not add photos, DOB, nationality, unconfirmed scores, CTC or foreign visa/tax eligibility based on generic market conventions.
 
-**For India (default):**
-- 2-3 pages
-- Photo optional (don't include unless user wants to)
-- Include all degrees with marks/CGPA/percentage
-- GATE score if applicable
-- Technical Skills section near the top — list everything
-- Current CTC and Expected CTC (if user chooses to include)
-- Notice period
-- Projects section if user is < 3 years experience
-- No fancy formatting — must pass Naukri/ATS parsers (no tables, columns, graphics)
-
-**For abroad (if user is looking internationally):**
-- **USA/Canada**: 1 page max. ATS-optimized. Mirror exact JD phrases. No photo, no personal details.
-- **Germany**: Include photo, DOB, nationality. Mention EU Blue Card eligibility.
-- **UK**: 2 pages max. "Personal Statement" header. British English.
-- **UAE/Gulf**: 2-3 pages. Include photo, nationality, visa status.
-- **Australia**: No photo. Lead with "Key Achievements". 2-3 pages.
-- **Netherlands**: No photo. Mention 30% ruling eligibility.
-
-ai-tailor governs the final PDF layout, evidence and verification; these generic formatting notes do not override the approved two-page BASE. Use its returned verified PDF and filename unchanged.
+ai-tailor governs the final layout, evidence and verification. Use its returned verified PDF and filename unchanged. Country-specific advice never overrides the approved source or the confirmed no-international-relocation preference.
 
 ### Human-Written Tone (CRITICAL — applies to every resume and cover letter)
 
@@ -438,7 +415,7 @@ Always zip resume + cover letter per application:
 │   └── ...
 ```
 
-Send via SendUserFile.
+Deliver the actual archive through the available attachment/file tool, or provide its local path when attachments are unsupported. Include only each job’s final verified resume and cover letter; exclude source/context files, manifests, tokens and raw QA. Save per-job archives inside their job folder; an optional combined archive belongs under `workflows/bundles/`, not in tracked source folders.
 
 ## Application Tracking
 
@@ -449,7 +426,7 @@ Read and update the existing Google Sheet linked in Sanjeev's profile, tab `Assi
 
 Read the current headers, relevant rows and status validation before writing. Preserve the existing sheet structure, formulas, formatting and other tabs. Deduplicate by company/requisition ID or canonical job URL. Store verified materials links, or clearly identify local paths; never fabricate hosted links. Record Applied only after a confirmed submission or explicit user report. Keep additional status dates, reasons, notes and review metrics in the job's workflow folder when the sheet has no matching column; report unavailable metrics as unavailable.
 
-**Status flow:** Found → Ready to Apply → Applied → Acknowledged → Online Assessment → Interview Round 1 → Interview Round 2 → HR Round → Offer → Rejected → Ghosted (21+ days)
+**Status milestones (branches, not a required sequence):** Found → Ready to Apply → Applied → Acknowledged / Assessment / Interview → Offer or Rejected when evidenced. Follow the existing Sheet’s validation. A long wait is Pending / no response, not a proven rejection or reason to overwrite APPLIED history. Keep local preparation/submission status separate from later employer outcomes; record nonsecret outcome evidence in the job folder, and reconcile explicit user-reported submissions into the local manifest before another apply attempt.
 
 ## Weekly Performance Review
 

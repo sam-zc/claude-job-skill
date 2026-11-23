@@ -44,8 +44,8 @@ Natural language also works — e.g. "Find me React jobs in Bangalore", "Apply t
 - Application tracker (existing Google Sheet) with status flow from Found → Applied → Offer/Rejected
 - Gmail-based auto-detection of rejections, interview invites, and assessments
 - **Auto-improvement on rejection patterns**: when Gmail shows repeated or same-day rejections,
-  the skill diagnoses the likely cause (ATS filter vs. targeting vs. seniority mismatch) and
-  automatically tightens keyword matching or search targeting going forward — and always tells
+  the skill reviews observed patterns, supported keywords and role fit, without treating rejection
+  timing as proof of an ATS filter, and adjusts search emphasis within confirmed preferences — and always tells
   you what changed and why
 - Clean output only: no tool/JS/code-block narration, no "let me check X" pauses — just job
   listings, fitness scores, apply links, and status updates
@@ -90,7 +90,7 @@ Browser/search/email/Sheets access comes from the running agent's tools. Runtime
 account access are still required; credentials are never bundled. Search and nightly commands
 prepare materials; explicit apply requests authorize the separate application flow.
 
-Use Python 3.10+ and install Poppler with the platform package manager (`brew install poppler`
+Use Python 3.10+ and RTK (the helper subprocesses follow the repository RTK convention), and install Poppler with the platform package manager (`brew install poppler`
 on macOS). Prepare an isolated Python environment and run the checks:
 
 ```sh
@@ -99,6 +99,11 @@ rtk proxy .venv/bin/python -m pip install -r skills/ai-tailor/scripts/requiremen
 rtk proxy .venv/bin/python -m unittest discover -s skills/ai-tailor/scripts -p 'test_*.py'
 rtk proxy .venv/bin/python -m unittest discover -s skills/ai-apply/scripts -p 'test_*.py'
 ```
+
+The application suite includes a local integration test using a real edited PDF and the
+verification CLI, then claim release/reacquisition, unchanged-PDF upload validation and duplicate
+prevention. Its review/confirmation records are explicitly synthetic fixtures; it does not certify
+an agent visual review, employer ATS parsing or live portal submission.
 
 For actual runs, set `PDF_PYTHON` to the absolute path of the prepared Python executable and use
 the helper commands in each skill. Poppler and the pinned Python packages are runtime dependencies,

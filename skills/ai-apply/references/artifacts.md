@@ -63,7 +63,7 @@ Local job PDF path: (only after verified copying)
 ## Initial Resume Review
 ATS Score: optional /100 (heuristic, not hiring probability or an acceptance gate)
 Detected Level:
-Target Market: India
+Target Market: India / India-compatible international remote (from the actual JD)
 Recruiter Verdict: (simulation)
 Supporting review findings; explain any score's limits if one was produced.
 
