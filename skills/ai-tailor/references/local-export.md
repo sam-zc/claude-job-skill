@@ -10,7 +10,7 @@ The source and output format are PDF. Work only on `workflows/<company>/<job>/re
 
 ```bash
 rtk proxy "$PDF_PYTHON" skills/ai-tailor/scripts/verify_job.py \
-  --workspace /Users/SANJEEV.S/projects/misc \
+  --workspace . \
   --job-dir "$JOB_DIR" --provenance "$ITERATION/provenance.json" \
   --expected-text "$ITERATION/expected.txt" --pdf "$ITERATION/direct.pdf" \
   --out "$QA_ITERATION"
